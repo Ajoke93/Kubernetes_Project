@@ -18,7 +18,7 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68'
-                        sh 'scp -o StrictHostKeyChecking=no /home/jenkins/workspace/Kunernetes-Project/* ubuntu@172.31.2.68:/home/ubuntu/Kubernetes_Project'
+                        sh 'scp /home/jenkins/workspace/Kunernetes-Project/* ubuntu@172.31.2.68:/home/ubuntu/Kubernetes_Project'
                     }
                 }
             }
