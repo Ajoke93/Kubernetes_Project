@@ -8,7 +8,6 @@ pipeline {
                 cleanWs()
             }
         }
-
         stage('Checkout') {
             steps {
                 git 'https://github.com/Ajoke93/Kubernetes_Project.git'
