@@ -1,7 +1,7 @@
 pipeline {
     agent {
         label 'Jenkins-slave1'
-    }   
+    }
     stages {
         stage('Cleanup Workspace') {
             steps {
@@ -14,9 +14,13 @@ pipeline {
             }
         }
         stage('Moving Dockerfile to Jenkins') {
-            sshagent(['ansible-cred']) {
-                sh 'ssh -o StrictHostKeyChecking=no -l ubuntu@172.31.2.68'
-                scp 'scp /home/jenkins/workspace/Kunernetes-Project/* ubuntu@172.31.2.68:/home/ubuntu'
+            steps {
+                script {
+                    sshagent(['ansible-cred']) {
+                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "mkdir -p /home/ubuntu/Kubernetes_Project"'
+                        sh 'scp -o StrictHostKeyChecking=no /home/jenkins/workspace/Kunernetes-Project/* ubuntu@172.31.2.68:/home/ubuntu/Kubernetes_Project'
+                    }
+                }
             }
         }
     }
