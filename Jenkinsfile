@@ -30,7 +30,7 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker image build -t $JOB_NAME:v1.$BUILD_ID ."
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker image build -t ${JOB_NAME}:v1.${BUILD_ID} ."
                         '''
                     }
                 }
@@ -41,8 +41,8 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag $JOB_NAME:v1.$BUILD_ID ajoke93/$JOB_NAME:v1.$BUILD_ID"
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag $JOB_NAME:v1.$BUILD_ID ajoke93/$JOB_NAME:LATEST"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag ${JOB_NAME}:v1.${BUILD_ID} ajoke93/${JOB_NAME}:v1.${BUILD_ID}"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag ${JOB_NAME}:v1.${BUILD_ID} ajoke93/${JOB_NAME}:LATEST"
                         '''
                     }
                 }
@@ -51,12 +51,12 @@ pipeline {
         stage('Push Images to Dockerhub') {
             steps {
                 script {
-                    sshagent(['ansible-cred']) {
-                        withCredentials([string(credentialsId: 'Dockerhub-Cred', variable: 'Dockerhub-Cred')]) {
+                    withCredentials([string(credentialsId: 'Dockerhub-Cred', variable: 'Dockerhub-Cred')]) {
+                        sshagent(['ansible-cred']) {
                             sh """
-                                echo \$DockerhubPassword | ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker login -u ajoke93 -p $(Dockerhub-Cred)'
-                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/$JOB_NAME:v1.$BUILD_ID'
-                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/$JOB_NAME:LATEST'
+                                echo "\$Dockerhub-Cred" | ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker login -u ajoke93 --password-stdin'
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/\${JOB_NAME}:v1.\${BUILD_ID}'
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/\${JOB_NAME}:LATEST'
                             """
                         }
                     }
