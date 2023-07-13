@@ -13,7 +13,7 @@ pipeline {
                 git 'https://github.com/Ajoke93/Kubernetes_Project.git'
             }
         }
-        stage('Moving Dockerfile to Jenkins') {
+        stage('Sending Dockerfile to Ansible Server over SSH') {
             steps {
                 script {
                     sshagent(['ansible-cred']) {
@@ -44,6 +44,21 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag $JOB_NAME:v1.$BUILD_ID ajoke93/$JOB_NAME:v1.$BUILD_ID"
                             ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag $JOB_NAME:v1.$BUILD_ID ajoke93/$JOB_NAME:LATEST"
                         '''
+                    }
+                }
+            }
+        }
+        stage('Push Images to Dockerhub') {
+            steps {
+                script {
+                    sshagent(['ansible-cred']) {
+                        withCredentials([string(credentialsId: 'Dockerhub-Cred', variable: 'Dockerhub-Cred')]) {
+                            sh '''
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "docker login -u ajoke93 -p $Dockerhub-Cred"
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "docker image push ajoke93/$JOB_NAME:v1.$BUILD_ID"
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "docker image push ajoke93/$JOB_NAME:LATEST"
+                            '''
+                        }
                     }
                 }
             }
