@@ -51,12 +51,12 @@ pipeline {
         stage('Push Images to Dockerhub') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'docker-jenkins-cred', variable: 'docker-jenkins-cred')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', passwordVariable: 'docker_passwd', usernameVariable: 'docker_username')]) {
                         sshagent(['ansible-cred']) {
                             sh """
-                                "docker login -u ajoke93 -p ${docker-jenkins-cred}"
-                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/${JOB_NAME}:v1.${BUILD_ID}'
-                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/${JOB_NAME}:LATEST'
+                                "docker login -u ${docker_username} -p ${docker_passwd}"
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ${docker_username}/${JOB_NAME}:v1.${BUILD_ID}'
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ${docker_username}/${JOB_NAME}:LATEST'
                             """
                         }
                     }
