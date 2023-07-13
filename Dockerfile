@@ -1,4 +1,4 @@
-FROM  centos:latest
+FROM  ubuntu:latest
 MAINTAINER vikashashoke@gmail.com
 RUN apt install -y httpd \
  zip\
