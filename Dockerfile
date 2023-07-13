@@ -1,6 +1,6 @@
 FROM  ubuntu:latest
 MAINTAINER vikashashoke@gmail.com
-RUN apt install -y httpd \
+RUN apt update && apt install -y httpd \
  zip\
  unzip
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
@@ -11,7 +11,7 @@ RUN rm -rf photogenic photogenic.zip
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 EXPOSE 80 22 443
 
-
+#apt update && apt install -y apache2 zip unzip
 # FROM  centos:latest
 # MAINTAINER vikashashoke@gmail.com
 # RUN yum install -y httpd \
