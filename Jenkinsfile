@@ -31,7 +31,7 @@ pipeline {
                     sshagent(['ansible-cred']) {
                         sh '''
                             ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project"
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "docker image build -t kubernetes-project:v1.17 ."
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "docker image build -t kubernetes-project:v1.17 /home/ubuntu/Kubernetes_Project"
                         '''
                     }
                 }
