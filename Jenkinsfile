@@ -30,8 +30,19 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project"
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "docker image build -t kubernetes-project:v1.17 /home/ubuntu/Kubernetes_Project"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker image build -t $JOB_NAME:v1.$BUILD_ID ."
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Building Docker tagging') {
+            steps {
+                script {
+                    sshagent(['ansible-cred']) {
+                        sh '''
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag $JOB_NAME:v1.$BUILD_ID ajoke93/$JOB_NAME:v1.$BUILD_ID"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag $JOB_NAME:v1.$BUILD_ID ajoke93/$JOB_NAME:v1:LATEST"
                         '''
                     }
                 }
