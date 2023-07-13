@@ -63,5 +63,17 @@ pipeline {
                 }
             }
         }
+        stage('Copy file from Ansible to Kubernetes cluster') {
+            steps {
+                script {
+                    sshagent(['kubernetes_server']) {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'mkdir -p /home/ubuntu/Kubernetes_Project'
+                            scp -r /home/jenkins/workspace/Kunernetes-Project/* ubuntu@172.31.2.68:/home/ubuntu/Kubernetes_Project
+                        """
+                    }
+                }
+            }
+        }
     }
 }
