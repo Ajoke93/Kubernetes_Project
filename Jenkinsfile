@@ -55,8 +55,8 @@ pipeline {
                         sshagent(['ansible-cred']) {
                             sh """
                                 ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker login -u ajoke93 -p $('dockerhub_cred)'
-                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/\${JOB_NAME}:v1.\${BUILD_ID}'
-                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/\${JOB_NAME}:LATEST'
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/${JOB_NAME}:v1.${BUILD_ID}'
+                                ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'docker image push ajoke93/${JOB_NAME}:LATEST'
                             """
                         }
                     }
