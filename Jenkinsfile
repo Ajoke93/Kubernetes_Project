@@ -51,7 +51,7 @@ pipeline {
         stage('Push Images to Dockerhub') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', passwordVariable: 'docker_passwd', usernameVariable: 'docker_username')]) {
+                    withCredentials([usernamePassword(credentialsId: 'ae64a27f-523c-4140-bd88-614d48e714d6', passwordVariable: 'docker_passwd', usernameVariable: 'docker_username')]) {
                         sshagent(['ansible-cred']) {
                             sh """
                                 "docker login -u ${docker_username} -p ${docker_passwd}"
