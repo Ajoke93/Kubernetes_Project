@@ -18,8 +18,8 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "mkdir -p /home/ubuntu/Kubernetes_Project"
-                            scp -r /home/ubuntu/workspace/kubernetes-project/* ubuntu@172.31.2.68:/home/ubuntu/kubernetes_Project
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "mkdir -p /home/ubuntu/kubernetes_project"
+                            scp -r /home/ubuntu/workspace/kubernetes-project/* ubuntu@172.31.2.68:/home/ubuntu/kubernetes_project
                         '''
                     }
                 }
@@ -30,7 +30,7 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker image build -t ${JOB_NAME}:v1.${BUILD_ID} ."
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/kubernetes_project && docker image build -t ${JOB_NAME}:v1.${BUILD_ID} ."
                         '''
                     }
                 }
@@ -41,8 +41,8 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag ${JOB_NAME}:v1.${BUILD_ID} ajoke93/${JOB_NAME}:v1.${BUILD_ID}"
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/Kubernetes_Project && docker tag ${JOB_NAME}:v1.${BUILD_ID} ajoke93/${JOB_NAME}:LATEST"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/kubernetes_project && docker tag ${JOB_NAME}:v1.${BUILD_ID} ajoke93/${JOB_NAME}:v1.${BUILD_ID}"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "cd /home/ubuntu/kubernetes_project && docker tag ${JOB_NAME}:v1.${BUILD_ID} ajoke93/${JOB_NAME}:LATEST"
                         '''
                     }
                 }
@@ -68,8 +68,8 @@ pipeline {
                 script {
                     sshagent(['kubernetes_server']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'mkdir -p /home/ubuntu/Kubernetes_Project'
-                            scp -r /home/jenkins/workspace/Kunernetes-Project/* ubuntu@172.31.2.68:/home/ubuntu/Kubernetes_Project
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'mkdir -p /home/ubuntu/kubernetes_project'
+                            scp -r /home/ubuntu/workspace/kubernetes-project/* ubuntu@172.31.2.68:/home/ubuntu/kubernetes_project
                         """
                     }
                 }
