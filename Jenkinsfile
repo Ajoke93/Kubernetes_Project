@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'any'
+        label 'Jenkins-master'
     }
     stages {
         stage('Cleanup Workspace') {
