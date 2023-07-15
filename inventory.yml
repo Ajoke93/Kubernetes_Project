@@ -1,4 +1,4 @@
-managed_node:
+kubernetes:
   hosts:
     172.31.12.231:
       ansible_user: ubuntu
