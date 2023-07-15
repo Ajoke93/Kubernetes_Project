@@ -1,6 +1,6 @@
 ---
 - name: Deploy Kubernetes Objects
-  hosts: kubernetes
+  hosts: 172.31.12.231
   become: true
   tasks:
     - name: Delete old deployment
