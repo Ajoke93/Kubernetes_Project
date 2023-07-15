@@ -1,9 +1,5 @@
-ansible:
+managed_node:
   hosts:
-    ansible:
-      ansible_host: 172.31.2.68
-
-kubernetes:
-  hosts:
-    kubernetes:
-      ansible_host: 172.31.12.231
+    172.31.12.231:
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: /home/ubuntu/.ssh/id_rsa
