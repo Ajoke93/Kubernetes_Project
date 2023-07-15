@@ -68,8 +68,8 @@ pipeline {
                 script {
                     sshagent(['kubernetes_server']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 'mkdir -p /home/ubuntu/kubernetes_project'
-                            scp -r /home/ubuntu/workspace/kubernetes-project/* ubuntu@172.31.2.68:/home/ubuntu/kubernetes_project
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.12.231 'mkdir -p /home/ubuntu/kubernetes_project'
+                            scp -r /home/ubuntu/workspace/kubernetes-project/* ubuntu@172.31.12.231:/home/ubuntu/kubernetes_project
                         """
                     }
                 }
