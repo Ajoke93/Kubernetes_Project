@@ -1,19 +1,18 @@
 ---
 - name: Deploy Kubernetes Objects
-  hosts: localhost
-  connection: local
+  hosts: kubernetes
   become: true
   tasks:
     - name: Delete old deployment
-      command: kubectl delete -f /home/ubuntu/kubernetes-project/Deployment.yml
+      command: kubectl delete -f /home/ubuntu/kubernetes_project/Deployment.yml
       ignore_errors: yes
 
     - name: Delete old service
-      command: kubectl delete -f /home/ubuntu/kubernetes-project/Service.yml
+      command: kubectl delete -f /home/ubuntu/kubernetes_project/Service.yml
       ignore_errors: yes
 
     - name: Create new deployment
-      command: kubectl apply -f /home/ubuntu/kubernetes-project/Deployment.yml
+      command: kubectl apply -f /home/ubuntu/kubernetes_project/Deployment.yml
 
     - name: Create new service
-      command: kubectl apply -f /home/ubuntu/kubernetes-project/Service.yml
+      command: kubectl apply -f /home/ubuntu/kubernetes_project/Service.yml
