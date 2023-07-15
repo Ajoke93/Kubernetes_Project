@@ -1,4 +1,6 @@
-hosts:
-  172.31.12.231:
-    ansible_user: ubuntu
-    ansible_password: ajoke1234
+---
+all:
+  hosts:
+    172.31.12.231:
+      ansible_user: ubuntu
+      ansible_password: ajoke1234
