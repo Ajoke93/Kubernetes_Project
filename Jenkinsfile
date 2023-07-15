@@ -75,5 +75,17 @@ pipeline {
                 }
             }
         }
+        stage('Kubernetes Deployment using ansible') {
+            steps {
+                script {
+                    sshagent(['ansible-cred']) {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.12.231 "cd /home/ubuntu/"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.12.231 "cd /home/ubuntu/ ansible-playbook ansible.yml"
+                        """
+                    }
+                }
+            }
+        }
     }
 }
