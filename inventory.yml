@@ -1,0 +1,4 @@
+all:
+  hosts:
+    kubernetes:
+      ansible_host: 172.31.12.231
