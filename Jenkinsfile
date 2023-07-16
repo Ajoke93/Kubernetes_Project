@@ -80,7 +80,7 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.1.140 "ansible-playbook -i inventory.yml /home/ubuntu/kubernetes_project/ansible.yml"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.2.68 "ansible-playbook -i inventory.yml /home/ubuntu/kubernetes_project/ansible.yml"
                         """
                     }
                 }
