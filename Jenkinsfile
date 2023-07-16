@@ -68,8 +68,8 @@ pipeline {
                 script {
                     sshagent(['kubernetes_server']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.12.231 'mkdir -p /home/ubuntu/kubernetes_project'
-                            scp -r /home/ubuntu/workspace/kubernetes-project/* ubuntu@172.31.12.231:/home/ubuntu/kubernetes_project
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.1.140 'mkdir -p /home/ubuntu/kubernetes_project'
+                            scp -r /home/ubuntu/workspace/kubernetes-project/* ubuntu@172.31.1.140:/home/ubuntu/kubernetes_project
                         """
                     }
                 }
@@ -80,7 +80,7 @@ pipeline {
                 script {
                     sshagent(['ansible-cred']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.12.231 "ansible-playbook -i inventory.yml /home/ubuntu/kubernetes_project/ansible.yml"
+                            ssh -o StrictHostKeyChecking=no ubuntu@172.31.1.140 "ansible-playbook -i inventory.yml /home/ubuntu/kubernetes_project/ansible.yml"
                         """
                     }
                 }
