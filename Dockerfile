@@ -1,5 +1,5 @@
 FROM  ubuntu:latest
-MAINTAINER vikashashoke@gmail.com
+MAINTAINER ajokesoyomboaws1@gmail.com
 RUN apt update && apt install -y apache2 \
  zip\
  unzip
@@ -9,7 +9,7 @@ RUN unzip photogenic.zip
 RUN cp -rvf photogenic/* .
 RUN rm -rf photogenic photogenic.zip
 CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"]
-EXPOSE 80 22 443
+EXPOSE 80 22
 
 #apt update && apt install -y apache2 zip unzip
 # FROM  centos:latest
